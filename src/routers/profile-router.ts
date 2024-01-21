@@ -1,15 +1,6 @@
 import { Router } from 'express'
-import { container } from '../composition-root'
-import { ProfileController } from '../controllers/profile-controller'
-import { AuthMW } from '../middlewares/auth.mw'
-import { ProfileValidationMW } from '../middlewares/profile.mw'
-import { inputValidationMw } from '../middlewares/inputErrorsCheck.mw'
-import { asyncHandler, asyncMiddleware } from '../helpers/async-wrappers'
-import { handleAvatarImageAndUploadBodyOptional } from '../middlewares/avatar.mw'
 
-const profileController = container.resolve(ProfileController)
-const authMW = container.resolve(AuthMW)
-const profileValidationMW = container.resolve(ProfileValidationMW)
+
 
 export const profileRouter = Router({})
 
@@ -140,15 +131,9 @@ export const profileRouter = Router({})
  */
 profileRouter.put(
   '/:id',
-  asyncMiddleware(authMW.authenticationCheckBearer.bind(authMW)),
-  authMW.checkOwner.bind(authMW),
-  handleAvatarImageAndUploadBodyOptional,
-  profileValidationMW.firstNameValidationOptional,
-  profileValidationMW.lastNameValidationOptional,
-  profileValidationMW.maleValidationOptional,
-  profileValidationMW.emailValidationOptional,
-  asyncMiddleware(inputValidationMw),
-  asyncHandler(profileController.updateProfile.bind(profileController))
+    (req: any, res: any) => {
+        res.send({});
+    }
 )
 
 /**
@@ -174,4 +159,6 @@ profileRouter.put(
  *       404:
  *         description: Профиль с таким profileId не найден
  */
-profileRouter.get('/:id', asyncHandler(profileController.findProfileById.bind(profileController)))
+profileRouter.get('/:id', (req: any, res: any) => {
+    res.send({});
+})

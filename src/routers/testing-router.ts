@@ -1,9 +1,5 @@
 import { Router } from 'express'
-import { asyncHandler } from '../helpers/async-wrappers'
-import { container } from '../composition-root'
-import { TestingController } from '../controllers/testing-controller'
 
-const testingController = container.resolve(TestingController)
 export const testingRouter = Router({})
 
 /**
@@ -24,4 +20,6 @@ export const testingRouter = Router({})
  *       204:
  *         description: Данные зачищены
  */
-testingRouter.delete('/', asyncHandler(testingController.deleteAll.bind(testingController)))
+testingRouter.delete('/', (req: any, res: any) => {
+    res.send({});
+})

@@ -1,9 +1,4 @@
 import { Router } from 'express'
-import { container } from '../composition-root'
-import { ProfileController } from '../controllers/profile-controller'
-import { asyncHandler } from '../helpers/async-wrappers'
-
-const profileController = container.resolve(ProfileController)
 
 export const profilesRouter = Router({})
 
@@ -96,4 +91,6 @@ export const profilesRouter = Router({})
  *              schema:
  *                $ref: '#/components/schemas/PaginatedProfileViewModel'
  */
-profilesRouter.get('/', asyncHandler(profileController.findAllProfiles.bind(profileController)))
+profilesRouter.get('/', (req: any, res: any) => {
+    res.send({});
+})

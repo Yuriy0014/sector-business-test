@@ -1,35 +1,10 @@
 import 'reflect-metadata'
-import express, { type NextFunction, type Request, type Response } from 'express'
-import cookieParser from 'cookie-parser'
-import { RouterPaths } from './helpers/RouterPaths'
-import { profileRouter } from './routers/profile-router'
-import { authRouter } from './routers/auth-router'
-import { profilesRouter } from './routers/profiles-router'
-import { STATUSES_HTTP } from './enum/http-statuses'
-import { container } from './composition-root'
-import { AuthMW } from './middlewares/auth.mw'
-import { asyncMiddleware } from './helpers/async-wrappers'
-import { testingRouter } from './routers/testing-router'
-import path from 'path'
+import express, {type NextFunction, type Request, type Response} from 'express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
+import {STATUSES_HTTP} from "./enum/http-statuses";
 
 export const app = express()
-const jsonBodyMW = express.json()
-app.use(jsonBodyMW)
-app.use(cookieParser())
-
-// Настройка папки для статических файлов
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
-
-// Добавляет всем запросам где нет требуется авторизация, req.user, если все таки юзер с активным accessToken
-const authMW = container.resolve(AuthMW)
-app.use(asyncMiddleware(authMW.addReqUser.bind(authMW)))
-
-app.use(RouterPaths.profile, profileRouter)
-app.use(RouterPaths.auth, authRouter)
-app.use(RouterPaths.profiles, profilesRouter)
-app.use(RouterPaths.testing, testingRouter)
 
 const options = {
   definition: {

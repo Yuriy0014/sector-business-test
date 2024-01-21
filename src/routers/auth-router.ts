@@ -1,17 +1,8 @@
 import { Router } from 'express'
-import { AuthController } from '../controllers/auth-controller'
-import { container } from '../composition-root'
-import { AuthMW } from '../middlewares/auth.mw'
-import { inputValidationMw } from '../middlewares/inputErrorsCheck.mw'
-import { ProfileValidationMW } from '../middlewares/profile.mw'
-import { asyncHandler, asyncMiddleware } from '../helpers/async-wrappers'
-import { handleAvatarImageAndUploadBody } from '../middlewares/avatar.mw'
 
-const authController = container.resolve(AuthController)
-const authMW = container.resolve(AuthMW)
+
 
 export const authRouter = Router({})
-const profileValidationMW = container.resolve(ProfileValidationMW)
 
 /**
  * @swagger
@@ -132,16 +123,9 @@ const profileValidationMW = container.resolve(ProfileValidationMW)
  *                $ref: '#/components/schemas/APIErrorResult'
  */
 authRouter.post(
-  '/register',
-  handleAvatarImageAndUploadBody,
-  profileValidationMW.firstNameValidation,
-  profileValidationMW.lastNameValidation,
-  profileValidationMW.passwordValidation,
-  profileValidationMW.maleValidation,
-  profileValidationMW.emailValidation,
-  profileValidationMW.isEmailExistValidation,
-  asyncMiddleware(inputValidationMw),
-  asyncHandler(authController.registerProfile.bind(authController))
+  '/register',(req: any, res: any) => {
+        res.send({});
+    }
 )
 
 /**
@@ -167,10 +151,10 @@ authRouter.post(
  *         description: Неверный email или пароль
  */
 authRouter.post(
-  '/login',
-  profileValidationMW.emailValidation,
-  asyncMiddleware(inputValidationMw),
-  asyncHandler(authController.login.bind(authController))
+  '/login',(req: any, res: any) => {
+        res.send({});
+    }
+
 )
 
 /**
@@ -188,10 +172,10 @@ authRouter.post(
  *         description: JWT refreshToken внутри cookie отсутствует, истёк или некорректный
  */
 authRouter.post(
-  '/logout',
-  asyncMiddleware(authMW.verifyRefreshToken.bind(authMW)),
-  asyncMiddleware(inputValidationMw),
-  asyncHandler(authController.logout.bind(authController))
+  '/logout',(req: any, res: any) => {
+        res.send({});
+    }
+
 )
 
 /**
@@ -213,8 +197,7 @@ authRouter.post(
  *         description: JWT refreshToken внутри cookie отсутствует, истёк или некорректный
  */
 authRouter.post(
-  '/refresh-token',
-  asyncMiddleware(authMW.verifyRefreshToken.bind(authMW)),
-  asyncMiddleware(inputValidationMw),
-  asyncHandler(authController.updateTokens.bind(authController))
+  '/refresh-token',(req: any, res: any) => {
+        res.send({});
+    }
 )
