@@ -25,7 +25,10 @@
 
 У проекта есть Swagger документация.
 
-Доступна по пути http://localhost:7050/api-docs/ 
+Доступна по пути https://swagger-test-jnd4.onrender.com/api-docs/
+
+Или локально -
+http://localhost:7050/api-docs/ 
 
 
 ## Функционал
