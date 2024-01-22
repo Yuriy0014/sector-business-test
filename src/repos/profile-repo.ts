@@ -77,6 +77,7 @@ export class ProfileRepo {
           'u.photoName',
           'u.passwordHash',
           'u.regDateId',
+          'u.isSuper',
         ])
         .where('id = :id', { id })
         .getOne()

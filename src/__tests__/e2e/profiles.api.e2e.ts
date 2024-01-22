@@ -209,14 +209,6 @@ describe('/Testing profiles', () => {
     )
   })
 
-  it('Обновления профиля не владельцем 403', async () => {
-    await request(app)
-      .put(`${RouterPaths.profile}/${profile2!.id}`)
-      .set({ Authorization: `Bearer ${accessToken1}` })
-      .send({})
-      .expect(STATUSES_HTTP.FORBIDDEN_403)
-  })
-
   it('Обновления своего профиля {}', async () => {
     await request(app)
       .put(`${RouterPaths.profile}/${profile2!.id}`)
@@ -464,6 +456,59 @@ describe('/Testing profiles', () => {
       .attach('photo', data1.photo)
       .expect(STATUSES_HTTP.NO_CONTENT_204)
   })
+
+  it('Обновления профиля не владельцем 403', async () => {
+
+    await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send({})
+        .expect(STATUSES_HTTP.FORBIDDEN_403)
+  })
+
+
+  it('Обновления профиля суперюзером', async () => {
+
+    // делаем профиль1 суперюзером
+    await profileRepository.update(profile1!.id, { isSuper: true });
+
+    await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send({})
+        .expect(STATUSES_HTTP.NO_CONTENT_204)
+  })
+
+  it('Обновления профиля суперюзером', async () => {
+
+    // делаем профиль1 суперюзером
+    await profileRepository.update(profile1!.id, { isSuper: true });
+
+    await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send({})
+        .expect(STATUSES_HTTP.NO_CONTENT_204)
+  })
+
+  it('Обновления профиля суперюзером BAD FORMAT', async () => {
+
+    await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send({})
+        .expect(STATUSES_HTTP.NO_CONTENT_204)
+  })
+
+  it('Обновления профиля суперюзером', async () => {
+
+    await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send({})
+        .expect(STATUSES_HTTP.NO_CONTENT_204)
+  })
+
 
   afterAll(async () => {
     await myDataSource.destroy()

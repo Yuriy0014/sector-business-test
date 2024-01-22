@@ -14,4 +14,7 @@ export class updateProfileDTO {
   male?: maleEnum
   email?: string
   photoName?: string
+  passwordHash?: string
+  regDateId?: string
+  isSuper?: boolean
 }
