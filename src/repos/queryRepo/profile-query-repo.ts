@@ -87,7 +87,7 @@ export class ProfileQueryRepo {
                 .createQueryBuilder('p')
                 .select([
                     'p.id',
-                    'p.IsSuer',
+                    'p.IsSuper',
                 ])
                 .where('p.id = :id', { id })
                 .getOne()
