@@ -491,22 +491,80 @@ describe('/Testing profiles', () => {
         .expect(STATUSES_HTTP.NO_CONTENT_204)
   })
 
-  it('Обновления профиля суперюзером BAD FORMAT', async () => {
+  it('Обновления профиля суперюзером BAD FORMAT ', async () => {
+
+    const data1 = {
+      regDateId: '2024466'
+    }
+
+    const a = await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send(data1)
+        .expect(STATUSES_HTTP.BAD_REQUEST_400)
+
+    const data2 = {
+      isSuper: 'FALSE'
+    }
+
+    const b =await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send(data2)
+        .expect(STATUSES_HTTP.BAD_REQUEST_400)
+
+
+
+    const data3 = {
+      passwordHash: 'newPassword'
+    }
+
+    const c =await request(app)
+        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .set({ Authorization: `Bearer ${accessToken1}` })
+        .send(data2)
+        .expect(STATUSES_HTTP.BAD_REQUEST_400)
+
+  })
+
+  it('Обновления профиля суперюзером профилей доступных только ему', async () => {
+
+    const data = {
+      regDateId: '2024',
+      isSuper: true,
+      passwordHash:'$2b$10$mm..0PTfz.94vs1hTUIoCeont2zJMTrcZS2XYZBi1pbiCZ4Q4BRC6'
+    }
 
     await request(app)
         .put(`${RouterPaths.profile}/${profile2!.id}`)
         .set({ Authorization: `Bearer ${accessToken1}` })
-        .send({})
+        .send(data)
         .expect(STATUSES_HTTP.NO_CONTENT_204)
   })
 
-  it('Обновления профиля суперюзером', async () => {
+  it('Обновления профиля обычным юзером проифилей доступных только суперу', async () => {
+
+    const data = {
+        regDateId: '2024',
+        isSuper: true,
+        passwordHash:'$2b$10$taHEFzRG8tpxFLWjJ6hQVOzgNOFzcnJe7o1juTjIIltlwCDFKCGHy'
+    }
+
+    const profile_initial = await profileRepository.findOneBy({ email: profile1!.email })
+
+
+    // делаем профиль1 обычным юзером
+    await profileRepository.update(profile1!.id, { isSuper: false });
 
     await request(app)
-        .put(`${RouterPaths.profile}/${profile2!.id}`)
+        .put(`${RouterPaths.profile}/${profile1!.id}`)
         .set({ Authorization: `Bearer ${accessToken1}` })
-        .send({})
+        .send(data)
         .expect(STATUSES_HTTP.NO_CONTENT_204)
+
+    const profile_final = await profileRepository.findOneBy({ email: profile1!.email })
+
+    expect({...profile_initial, isSuper: false}).toEqual(profile_final)
   })
 
 
