@@ -27,7 +27,7 @@ CREATE TABLE `migrations` (
   `timestamp` bigint NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,1705745437551,'Initial1705745437551');
+INSERT INTO `migrations` VALUES (1,1705745437551,'Initial1705745437551'),(2,1705924874124,'IsSuper1705924874124');
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,6 +56,7 @@ CREATE TABLE `profiles` (
   `photoName` varchar(255) NOT NULL,
   `passwordHash` varchar(255) NOT NULL,
   `regDateId` datetime NOT NULL,
+  `isSuper` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -66,7 +67,7 @@ CREATE TABLE `profiles` (
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
-INSERT INTO `profiles` VALUES ('70b29c66-19bd-46fe-a3ff-fe30a9889319','Питер','Паркер','Мужской','parker2034@yandex.ru','photo-1705819721745.jpg','$2b$10$Uj0kHHO8f0vGVzmbnkeal.qQyd62brEkuE6KZJAF./OWgdF2aU6xK','2024-01-21 09:48:40'),('b2c62198-4b5d-4224-963b-6652d6d4a066','Alan','Тьюринг','Мужской','alantuiringPNG1@yandex.ru','photo-1705819719130.png','$2b$10$mrdN.G5.mUKm7B3LgNcWF.Z8aZ.6KW7sJL4D4IKv6J..8FMwlxV5y','2024-01-21 09:48:39');
+INSERT INTO `profiles` VALUES ('5009593a-29d3-4e4f-86f6-4d202981c14c','Alan','Тьюринг','Мужской','alantuiringPNG1@yandex.ru','photo-1705946047581.png','$2b$10$G3Ilrj70XFohVX4DknozMOo04YNLBbwfCB8f/YW.9I3p2yfPBfwty','2024-01-22 20:54:08',0),('b5ea8295-8ee3-4df9-b5d9-9e7bea899148','Питер','Паркер','Мужской','parker2034@yandex.ru','photo-1705946050342.jpg','$2b$10$mm..0PTfz.94vs1hTUIoCeont2zJMTrcZS2XYZBi1pbiCZ4Q4BRC6','2024-01-01 00:00:00',1);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +100,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('2f25f8e8-ba4a-4065-a219-95e82be42ed8','::ffff:127.0.0.1','Title session','2024-01-21 09:48:41','1705819720546','deviceName undefined','b2c62198-4b5d-4224-963b-6652d6d4a066','2024-01-21 09:48:40',NULL),('7049bbda-a7f8-47e6-9cc1-cc76ef1943a5','::ffff:127.0.0.1','Title session','2024-01-21 09:48:41','1705819720674','deviceName undefined','70b29c66-19bd-46fe-a3ff-fe30a9889319','2024-01-21 09:48:40',NULL);
+INSERT INTO `sessions` VALUES ('4a15ff1e-03bc-453d-b003-953ae14f5ff6','::ffff:127.0.0.1','Title session','2024-01-22 20:54:09','1705946049125','deviceName undefined','5009593a-29d3-4e4f-86f6-4d202981c14c','2024-01-22 20:54:09',NULL),('c19bca42-768c-4d6d-bb2f-3bf03d78546b','::ffff:127.0.0.1','Title session','2024-01-22 20:54:09','1705946049323','deviceName undefined','b5ea8295-8ee3-4df9-b5d9-9e7bea899148','2024-01-22 20:54:09',NULL);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,4 +121,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-21 10:06:45
+-- Dump completed on 2024-01-22 21:02:59

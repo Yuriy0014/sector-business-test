@@ -12,6 +12,7 @@ import { MapProfileViewModelSQL } from './helpers/mapper-ProfileViewModel'
 import { DataSourceFactory } from './db/app-data-source'
 import { DataSource } from 'typeorm'
 import { ProfileValidationMW } from './middlewares/profile.mw'
+import { MapProfileRoleModelSQL } from './helpers/mapper-ProfileRoleModel'
 
 export const container = new Container()
 
@@ -24,6 +25,7 @@ container.bind(JwtService).to(JwtService)
 container.bind(ProfileValidationMW).to(ProfileValidationMW)
 
 container.bind(MapProfileViewModelSQL).to(MapProfileViewModelSQL)
+container.bind(MapProfileRoleModelSQL).to(MapProfileRoleModelSQL)
 
 container.bind(ProfileRepo).to(ProfileRepo)
 container.bind(ProfileQueryRepo).to(ProfileQueryRepo)

@@ -99,4 +99,23 @@ export class ProfileValidationMW {
     .withMessage('Email должен содержать от 5 до 50 символов')
     .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
     .withMessage('ERROR неверный формат email')
+
+  ///////
+  // Валидация полей для superuser
+  ///////
+
+  superBooleanValidationOptional = body('isSuper')
+    .optional()
+    .isBoolean()
+    .withMessage('isSuper должно быть булевым значением')
+
+  passwordHashValidationOptional = body('passwordHash')
+    .optional()
+    .matches(/^\$2[aby]?\$10\$\S{53}$/)
+    .withMessage('неверный формат хэша пароля')
+
+  regDateIdValidationOptional = body('regDateId')
+    .optional()
+    .isISO8601()
+    .withMessage('неверный формат даты регистрации')
 }

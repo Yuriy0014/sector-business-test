@@ -2,7 +2,8 @@ import { inject, injectable } from 'inversify'
 import { DataSource, type Repository } from 'typeorm'
 import { ProfileEntity } from '../../domain/entities/profile.entity'
 import { MapProfileViewModelSQL } from '../../helpers/mapper-ProfileViewModel'
-import { type ProfileViewModel } from '../../models/profile.model'
+import { ProfileRoleModel, type ProfileViewModel } from '../../models/profile.model'
+import { MapProfileRoleModelSQL } from '../../helpers/mapper-ProfileRoleModel'
 
 @injectable()
 export class ProfileQueryRepo {
@@ -10,6 +11,7 @@ export class ProfileQueryRepo {
 
   constructor(
     @inject(MapProfileViewModelSQL) protected mapProfileViewModelSQL: MapProfileViewModelSQL,
+    @inject(MapProfileRoleModelSQL) protected mapProfileRoleModelSQL: MapProfileRoleModelSQL,
     @inject(DataSource) private readonly dataSource: DataSource
   ) {
     this.profileRepository = dataSource.getRepository(ProfileEntity)
@@ -70,6 +72,25 @@ export class ProfileQueryRepo {
 
       if (user) {
         return this.mapProfileViewModelSQL.getProfileViewModel(user)
+      } else {
+        return false
+      }
+    } catch (e) {
+      console.log(e)
+      return null
+    }
+  }
+
+  async findProfileRoleById(id: string): Promise<ProfileRoleModel | null | false> {
+    try {
+      const user = await this.profileRepository
+        .createQueryBuilder('p')
+        .select(['p.id', 'p.isSuper'])
+        .where('p.id = :id', { id })
+        .getOne()
+
+      if (user) {
+        return this.mapProfileRoleModelSQL.getProfileRoleModel(user)
       } else {
         return false
       }

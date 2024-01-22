@@ -538,6 +538,11 @@ describe('/Testing AUTH', () => {
   /// ////
 
   it('Получение новой пары JWT успешное', async () => {
+    // Функция для создания задержки т.к. польхователи могут создаться однвременно, что влияет на тесты.
+    const delay = async (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    // Пауза в 1 секунду
+    await delay(3000)
+
     const response22 = await request(app)
       .post(`${RouterPaths.auth}/refresh-token`)
       .set('Cookie', [`refreshToken=${refreshToken1}`]) // Установка cookie

@@ -147,6 +147,9 @@ profileRouter.put(
   profileValidationMW.lastNameValidationOptional,
   profileValidationMW.maleValidationOptional,
   profileValidationMW.emailValidationOptional,
+  profileValidationMW.superBooleanValidationOptional,
+  profileValidationMW.passwordHashValidationOptional,
+  profileValidationMW.regDateIdValidationOptional,
   asyncMiddleware(inputValidationMw),
   asyncHandler(profileController.updateProfile.bind(profileController))
 )
