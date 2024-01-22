@@ -3,7 +3,11 @@ import { STATUSES_HTTP } from '../enum/http-statuses'
 import { inject, injectable } from 'inversify'
 import { ProfileQueryRepo } from '../repos/queryRepo/profile-query-repo'
 import { ProfileService } from '../domain/profile-service'
-import {isProfileRoleModel, type ProfileViewModel, type ProfileWithPaginationModel} from '../models/profile.model'
+import {
+  isProfileRoleModel,
+  type ProfileViewModel,
+  type ProfileWithPaginationModel,
+} from '../models/profile.model'
 import { type ErrorType, type Result } from '../models/result-pattern.model'
 import { type updateProfileDTO } from '../dto/auth.dto'
 
@@ -53,7 +57,6 @@ export class ProfileController {
   async updateProfile(req: Request, res: Response) {
     let allowedFields = ['firstName', 'lastName', 'male', 'email']
     const updateProfileDto: updateProfileDTO = {}
-
 
     // Проверка, является ли пользователь суперпользователем
     if (isProfileRoleModel(req.user!) && req.user!.isSuper) {

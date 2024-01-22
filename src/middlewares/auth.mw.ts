@@ -5,7 +5,7 @@ import { STATUSES_HTTP } from '../enum/http-statuses'
 import { inject, injectable } from 'inversify'
 import { ProfileQueryRepo } from '../repos/queryRepo/profile-query-repo'
 import { SessionQueryRepo } from '../repos/queryRepo/session-query-repo'
-import {isProfileRoleModel} from "../models/profile.model";
+import { isProfileRoleModel } from '../models/profile.model'
 
 @injectable()
 export class AuthMW {
@@ -70,11 +70,10 @@ export class AuthMW {
   }
 
   checkOwner(req: Request, res: Response, next: NextFunction) {
-
     // Проверка, является ли пользователь суперпользователем
     if (isProfileRoleModel(req.user!) && req.user!.isSuper) {
-      next(); // у суперпольхзователя полный доступ
-      return;
+      next() // у суперпольхзователя полный доступ
+      return
     }
 
     if (req.params.id !== req.user!.id) {

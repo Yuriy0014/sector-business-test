@@ -12,7 +12,7 @@ import { MapProfileViewModelSQL } from './helpers/mapper-ProfileViewModel'
 import { DataSourceFactory } from './db/app-data-source'
 import { DataSource } from 'typeorm'
 import { ProfileValidationMW } from './middlewares/profile.mw'
-import {MapProfileRoleModelSQL} from "./helpers/mapper-ProfileRoleModel";
+import { MapProfileRoleModelSQL } from './helpers/mapper-ProfileRoleModel'
 
 export const container = new Container()
 
