@@ -32,3 +32,13 @@ export class loginModel {
   email: string
   password: string
 }
+
+export class ProfileRoleModel {
+  id: string
+  isSuper: boolean
+}
+
+// Type guard
+export function isProfileRoleModel(user: ProfileViewModel | ProfileRoleModel): user is ProfileRoleModel {
+  return (user as ProfileRoleModel).isSuper !== undefined;
+}
