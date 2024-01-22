@@ -27,6 +27,9 @@ export class ProfileEntity {
   @Column()
   regDateId: Date
 
+  @Column({ default: false })
+  isSuper: boolean
+
   @OneToMany(() => SessionEntity, session => session.profile)
   sessions: SessionEntity[]
 }
